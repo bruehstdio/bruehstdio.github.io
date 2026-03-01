@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BruehStdio — Coming Soon</title>
+  <meta name="description" content="Something beautiful is brewing. BruehStdio is coming soon." />
+  <meta property="og:title" content="BruehStdio — Coming Soon" />
+  <meta property="og:description" content="Something beautiful is brewing." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111114;
+      --accent: #c8ff57;
+      --accent-dim: rgba(200, 255, 87, 0.12);
+      --text-primary: #f0ede8;
+      --text-muted: rgba(240, 237, 232, 0.45);
+      --border: rgba(240, 237, 232, 0.08);
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Radial glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(ellipse at center,
+        rgba(200, 255, 87, 0.06) 0%,
+        rgba(200, 255, 87, 0.02) 40%,
+        transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 2rem;
+      text-align: center;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* ── Logo mark ── */
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .logo-mark {
+      width: 72px;
+      height: 72px;
+      position: relative;
+    }
+
+    .logo-mark svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 18px rgba(200, 255, 87, 0.35));
+    }
+
+    .logo-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      background: linear-gradient(135deg, #f0ede8 30%, rgba(240,237,232,0.55) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+    }
+
+    /* ── Coming soon badge ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid var(--border);
+      background: var(--accent-dim);
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* ── Headline ── */
+    .headline {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 520px;
+    }
+
+    .headline h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--text-primary);
+    }
+
+    .headline p {
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      animation: fadeUp 1.2s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .logo-mark {
+        width: 56px;
+        height: 56px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="logo-wrap">
+      <!-- Logo mark: stylised "B" built from two overlapping arcs -->
+      <div class="logo-mark">
+        <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="BruehStdio logo mark">
+          <rect width="72" height="72" rx="18" fill="#111114"/>
+          <rect width="72" height="72" rx="18" fill="url(#grad)" opacity="0.15"/>
+          <!-- Left stem -->
+          <rect x="18" y="14" width="8" height="44" rx="4" fill="#c8ff57"/>
+          <!-- Upper bowl -->
+          <path d="M26 14 H42 C50.837 14 58 21.163 58 30 C58 38.837 50.837 46 42 46 H26 Z"
+                fill="none" stroke="#c8ff57" stroke-width="8" stroke-linejoin="round"/>
+          <!-- Lower bowl (slightly wider) -->
+          <path d="M26 36 H44 C53.389 36 61 43.611 61 53 C61 62.389 53.389 70 44 70 H26 Z"
+                fill="none" stroke="#c8ff57" stroke-width="8" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="grad" x1="0" y1="0" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#c8ff57"/>
+              <stop offset="100%" stop-color="#57d2ff"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <span class="logo-name">BruehStdio</span>
+    </div>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <span class="badge">
+      <span class="badge-dot" aria-hidden="true"></span>
+      Coming Soon
+    </span>
+
+    <div class="headline">
+      <h1>Something beautiful<br/>is brewing.</h1>
+      <p>We're crafting a new digital experience.<br/>Stay tuned — it won't be long.</p>
+    </div>
+
+  </div>
+
+  <footer>© 2026 BruehStdio · All rights reserved</footer>
+
+</body>
+</html>
